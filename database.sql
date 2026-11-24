@@ -25,6 +25,16 @@ CREATE TABLE tickets (
     FOREIGN KEY (assigned_to) REFERENCES users(id)
 );
 
+CREATE TABLE ticket_comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ticket_id INT NOT NULL,
+    user_id INT NOT NULL,
+    comment TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ticket_id) REFERENCES tickets(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 -- Seed users: password for admin is "admin123", for employee is "employee123"
 INSERT INTO users (name, email, password, role) VALUES
 ('Admin', 'admin@helpdesk.com', '$2y$12$cfr5wqdqdyo.2LDRw0D2A.z9l.LnXiVTzeYBRQDbbKgyVUNG1TpWu', 'admin'),

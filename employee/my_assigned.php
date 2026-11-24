@@ -48,7 +48,7 @@ require __DIR__ . '/../includes/navbar.php';
         <tbody>
         <?php while ($t = $tickets->fetch_assoc()): $overdue = is_overdue($t['deadline'], $t['status']); ?>
             <tr class="<?= $overdue ? 'table-danger' : '' ?>">
-                <td><?= e($t['title']) ?></td>
+                <td><a href="../ticket/view.php?id=<?= (int) $t['id'] ?>"><?= e($t['title']) ?></a></td>
                 <td><?= e($t['description']) ?></td>
                 <td><?= priority_badge($t['priority']) ?></td>
                 <td><?= e($t['deadline'] ?? '-') ?> <?= $overdue ? '<span class="badge bg-danger">Overdue</span>' : '' ?></td>

@@ -15,6 +15,13 @@ function current_role() {
     return $_SESSION['role'] ?? null;
 }
 
+function require_login() {
+    if (!is_logged_in()) {
+        header('Location: ../auth/login.php');
+        exit;
+    }
+}
+
 function require_role($roles) {
     if (!is_logged_in() || !in_array(current_role(), (array) $roles, true)) {
         header('Location: ../auth/login.php');
