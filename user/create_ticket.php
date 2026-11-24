@@ -5,6 +5,8 @@ require_role('user');
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verify_csrf();
+
     $title = trim($_POST['title'] ?? '');
     $description = trim($_POST['description'] ?? '');
     $priority = $_POST['priority'] ?? 'medium';
@@ -32,6 +34,7 @@ require __DIR__ . '/../includes/navbar.php';
         <div class="alert alert-danger"><?= e($error) ?></div>
     <?php endif; ?>
     <form method="post" style="max-width: 600px;">
+        <?= csrf_field() ?>
         <div class="mb-3">
             <label class="form-label">Title</label>
             <input type="text" name="title" class="form-control" required>

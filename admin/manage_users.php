@@ -5,6 +5,8 @@ require_role('admin');
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verify_csrf();
+
     $name = trim($_POST['name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
@@ -44,6 +46,7 @@ require __DIR__ . '/../includes/navbar.php';
         <div class="alert alert-danger"><?= e($error) ?></div>
     <?php endif; ?>
     <form method="post" class="row g-2 mb-5">
+        <?= csrf_field() ?>
         <div class="col-md-3">
             <input type="text" name="name" class="form-control" placeholder="Name" required>
         </div>

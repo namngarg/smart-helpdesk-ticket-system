@@ -42,3 +42,25 @@ function priority_badge($priority) {
     $color = $map[$priority] ?? 'secondary';
     return '<span class="badge bg-' . $color . '">' . e($priority) . '</span>';
 }
+
+function is_overdue($deadline, $status) {
+    return $deadline && $deadline < date('Y-m-d') && !in_array($status, ['resolved', 'closed'], true);
+}
+
+function csrf_token() {
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+function csrf_field() {
+    return '<input type="hidden" name="csrf_token" value="' . e(csrf_token()) . '">';
+}
+
+function verify_csrf() {
+    if (!hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'] ?? '')) {
+        http_response_code(403);
+        die('Invalid or missing CSRF token.');
+    }
+}

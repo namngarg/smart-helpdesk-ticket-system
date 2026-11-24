@@ -32,13 +32,13 @@ require __DIR__ . '/../includes/navbar.php';
         </tr>
         </thead>
         <tbody>
-        <?php while ($t = $tickets->fetch_assoc()): ?>
-            <tr>
+        <?php while ($t = $tickets->fetch_assoc()): $overdue = is_overdue($t['deadline'], $t['status']); ?>
+            <tr class="<?= $overdue ? 'table-danger' : '' ?>">
                 <td><?= e($t['title']) ?></td>
                 <td><?= priority_badge($t['priority']) ?></td>
                 <td><?= status_badge($t['status']) ?></td>
                 <td><?= e($t['assigned_name'] ?? 'Unassigned') ?></td>
-                <td><?= e($t['deadline'] ?? '-') ?></td>
+                <td><?= e($t['deadline'] ?? '-') ?> <?= $overdue ? '<span class="badge bg-danger">Overdue</span>' : '' ?></td>
                 <td><?= e($t['created_at']) ?></td>
             </tr>
         <?php endwhile; ?>

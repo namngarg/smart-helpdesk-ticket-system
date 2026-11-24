@@ -3,6 +3,8 @@ require_once __DIR__ . '/../includes/functions.php';
 require_role('employee');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verify_csrf();
+
     $ticket_id = (int) ($_POST['ticket_id'] ?? 0);
     $status = $_POST['status'] ?? 'open';
     $allowed_statuses = ['open', 'in_progress', 'resolved', 'closed'];
@@ -44,15 +46,16 @@ require __DIR__ . '/../includes/navbar.php';
         </tr>
         </thead>
         <tbody>
-        <?php while ($t = $tickets->fetch_assoc()): ?>
-            <tr>
+        <?php while ($t = $tickets->fetch_assoc()): $overdue = is_overdue($t['deadline'], $t['status']); ?>
+            <tr class="<?= $overdue ? 'table-danger' : '' ?>">
                 <td><?= e($t['title']) ?></td>
                 <td><?= e($t['description']) ?></td>
                 <td><?= priority_badge($t['priority']) ?></td>
-                <td><?= e($t['deadline'] ?? '-') ?></td>
+                <td><?= e($t['deadline'] ?? '-') ?> <?= $overdue ? '<span class="badge bg-danger">Overdue</span>' : '' ?></td>
                 <td><?= e($t['creator_name']) ?></td>
                 <td>
                     <form method="post" class="d-flex gap-2">
+                        <?= csrf_field() ?>
                         <input type="hidden" name="ticket_id" value="<?= (int) $t['id'] ?>">
                         <select name="status" class="form-select form-select-sm">
                             <?php foreach (['open', 'in_progress', 'resolved', 'closed'] as $s): ?>

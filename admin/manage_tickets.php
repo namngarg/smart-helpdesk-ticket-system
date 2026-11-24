@@ -3,6 +3,8 @@ require_once __DIR__ . '/../includes/functions.php';
 require_role('admin');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verify_csrf();
+
     $ticket_id = (int) ($_POST['ticket_id'] ?? 0);
     $assigned_to = (int) ($_POST['assigned_to'] ?? 0) ?: null;
     $priority = $_POST['priority'] ?? 'medium';
@@ -44,13 +46,14 @@ require __DIR__ . '/../includes/navbar.php';
         </tr>
         </thead>
         <tbody>
-        <?php while ($t = $tickets->fetch_assoc()): ?>
-            <tr>
+        <?php while ($t = $tickets->fetch_assoc()): $overdue = is_overdue($t['deadline'], $t['status']); ?>
+            <tr class="<?= $overdue ? 'table-danger' : '' ?>">
                 <td><?= e($t['title']) ?></td>
                 <td><?= e($t['creator_name']) ?></td>
-                <td><?= status_badge($t['status']) ?></td>
+                <td><?= status_badge($t['status']) ?> <?= $overdue ? '<span class="badge bg-danger">Overdue</span>' : '' ?></td>
                 <td>
                     <form method="post" class="d-flex gap-2">
+                        <?= csrf_field() ?>
                         <input type="hidden" name="ticket_id" value="<?= (int) $t['id'] ?>">
                         <select name="assigned_to" class="form-select form-select-sm">
                             <option value="">Unassigned</option>
