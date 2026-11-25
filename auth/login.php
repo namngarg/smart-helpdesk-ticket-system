@@ -68,17 +68,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?= csrf_field() ?>
                 <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" required>
+                    <input type="email" id="email" name="email" class="form-control" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" required>
+                    <input type="password" id="password" name="password" class="form-control" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Login</button>
             </form>
             <p class="text-center mt-3 mb-0">No account? <a href="register.php">Register User</a></p>
+
+            <button type="button" class="demo-toggle-btn" onclick="toggleDemo()">
+                <i class="bi bi-lightning-charge me-1"></i>
+                <span id="demoToggleLabel">Quick Access</span>
+                <i class="bi bi-chevron-down ms-1" id="demoToggleChevron"></i>
+            </button>
+
+            <div class="demo-panel d-none" id="demoPanel">
+                <p class="text-muted small mb-2">Explore the app instantly as:</p>
+                <div class="demo-account-card" onclick="fillDemo('admin@helpdesk.com','admin123')">
+                    <span class="demo-role-icon bg-dark"><i class="bi bi-shield-lock"></i></span>
+                    <div>
+                        <div class="fw-semibold">Administrator</div>
+                        <div class="text-muted small">Full access &mdash; manage tickets &amp; users</div>
+                    </div>
+                    <i class="bi bi-box-arrow-in-right ms-auto text-muted"></i>
+                </div>
+                <div class="demo-account-card" onclick="fillDemo('employee1@helpdesk.com','employee123')">
+                    <span class="demo-role-icon bg-info"><i class="bi bi-headset"></i></span>
+                    <div>
+                        <div class="fw-semibold">Support Agent</div>
+                        <div class="text-muted small">Resolve assigned tickets</div>
+                    </div>
+                    <i class="bi bi-box-arrow-in-right ms-auto text-muted"></i>
+                </div>
+                <p class="text-muted small text-center mb-0 mt-2">New here? <a href="register.php">Create your own account</a> to try it as a customer.</p>
+            </div>
         </div>
     </div>
 </div>
+<script>
+function toggleDemo() {
+    const panel = document.getElementById('demoPanel');
+    const label = document.getElementById('demoToggleLabel');
+    const chevron = document.getElementById('demoToggleChevron');
+    const hidden = panel.classList.toggle('d-none');
+    label.textContent = hidden ? 'Quick Access' : 'Hide Quick Access';
+    chevron.classList.toggle('bi-chevron-down', hidden);
+    chevron.classList.toggle('bi-chevron-up', !hidden);
+}
+
+function fillDemo(email, password) {
+    document.getElementById('email').value = email;
+    document.getElementById('password').value = password;
+}
+</script>
 </body>
 </html>
