@@ -28,12 +28,18 @@ $pageTitle = 'New Ticket';
 require __DIR__ . '/../includes/header.php';
 require __DIR__ . '/../includes/navbar.php';
 ?>
-<div class="container">
-    <h3 class="mb-4">Create New Ticket</h3>
+<div class="container-fluid">
+    <div class="page-header d-flex align-items-center gap-3 mb-4">
+        <div class="page-icon"><i class="bi bi-plus-circle"></i></div>
+        <div>
+            <h3 class="mb-0">Create New Ticket</h3>
+            <p class="mb-0">Describe your issue and we'll get on it</p>
+        </div>
+    </div>
     <?php if ($error): ?>
         <div class="alert alert-danger"><?= e($error) ?></div>
     <?php endif; ?>
-    <form method="post" style="max-width: 600px;">
+    <form method="post" class="card p-4" style="max-width: 600px;">
         <?= csrf_field() ?>
         <div class="mb-3">
             <label class="form-label">Title</label>
@@ -55,7 +61,7 @@ require __DIR__ . '/../includes/navbar.php';
             <label class="form-label">Deadline (optional)</label>
             <input type="date" name="deadline" class="form-control">
         </div>
-        <button type="submit" class="btn btn-primary">Submit Ticket</button>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-send me-1"></i>Submit Ticket</button>
     </form>
 </div>
 <?php require __DIR__ . '/../includes/footer.php'; ?>

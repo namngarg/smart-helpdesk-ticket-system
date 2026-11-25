@@ -49,29 +49,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <div class="auth-wrapper">
-    <div class="auth-card">
-        <div class="auth-icon"><i class="bi bi-person-plus"></i></div>
-        <h3 class="mb-4 text-center">Create Account</h3>
-        <?php if ($error): ?>
-            <div class="alert alert-danger"><?= e($error) ?></div>
-        <?php endif; ?>
-        <form method="post">
-            <?= csrf_field() ?>
-            <div class="mb-3">
-                <label class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Register</button>
-        </form>
-        <p class="text-center mt-3 mb-0">Already have an account? <a href="login.php">Login</a></p>
+    <div class="auth-shell">
+        <div class="auth-illustration">
+            <img src="../assets/images/support-illustration.svg" alt="Support illustration">
+            <h4>Join the team</h4>
+            <p>Create an account to submit and track your support tickets.</p>
+        </div>
+        <div class="auth-card">
+            <h3 class="mb-4 text-center">Create Account</h3>
+            <?php if ($error): ?>
+                <div class="alert alert-danger"><?= e($error) ?></div>
+            <?php endif; ?>
+            <form method="post">
+                <?= csrf_field() ?>
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+            <p class="text-center mt-3 mb-0">Already have an account? <a href="login.php">Login</a></p>
+        </div>
     </div>
 </div>
 </body>

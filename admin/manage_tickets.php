@@ -31,8 +31,22 @@ $pageTitle = 'Manage Tickets';
 require __DIR__ . '/../includes/header.php';
 require __DIR__ . '/../includes/navbar.php';
 ?>
-<div class="container">
-    <h3 class="mb-4">All Tickets</h3>
+<div class="container-fluid">
+    <div class="page-header d-flex align-items-center gap-3 mb-4">
+        <div class="page-icon"><i class="bi bi-ticket-detailed"></i></div>
+        <div>
+            <h3 class="mb-0">All Tickets</h3>
+            <p class="mb-0">Assign tickets and set priority/deadline</p>
+        </div>
+    </div>
+    <?php if ($tickets->num_rows === 0): ?>
+        <div class="card">
+            <div class="empty-state">
+                <i class="bi bi-inbox"></i>
+                No tickets have been submitted yet.
+            </div>
+        </div>
+    <?php else: ?>
     <table class="table table-bordered table-striped align-middle">
         <thead>
         <tr>
@@ -49,10 +63,10 @@ require __DIR__ . '/../includes/navbar.php';
         <?php while ($t = $tickets->fetch_assoc()): $overdue = is_overdue($t['deadline'], $t['status']); ?>
             <tr class="<?= $overdue ? 'table-danger' : '' ?>">
                 <td><a href="../ticket/view.php?id=<?= (int) $t['id'] ?>"><?= e($t['title']) ?></a></td>
-                <td><?= e($t['creator_name']) ?></td>
+                <td><?= avatar($t['creator_name']) ?></td>
                 <td><?= status_badge($t['status']) ?> <?= $overdue ? '<span class="badge bg-danger">Overdue</span>' : '' ?></td>
                 <td>
-                    <form method="post" class="d-flex gap-2">
+                    <form method="post" class="d-flex gap-2" onsubmit="return confirm('Are you sure you want to save these changes to this ticket?');">
                         <?= csrf_field() ?>
                         <input type="hidden" name="ticket_id" value="<?= (int) $t['id'] ?>">
                         <select name="assigned_to" class="form-select form-select-sm">
@@ -75,12 +89,13 @@ require __DIR__ . '/../includes/navbar.php';
                         <input type="date" name="deadline" value="<?= e($t['deadline'] ?? '') ?>" class="form-control form-control-sm">
                 </td>
                 <td>
-                        <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                        <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-check-lg"></i></button>
                     </form>
                 </td>
             </tr>
         <?php endwhile; ?>
         </tbody>
     </table>
+    <?php endif; ?>
 </div>
 <?php require __DIR__ . '/../includes/footer.php'; ?>

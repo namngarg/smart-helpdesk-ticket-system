@@ -53,25 +53,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <div class="auth-wrapper">
-    <div class="auth-card">
-        <div class="auth-icon"><i class="bi bi-headset"></i></div>
-        <h3 class="mb-4 text-center">Smart Helpdesk</h3>
-        <?php if ($error): ?>
-            <div class="alert alert-danger"><?= e($error) ?></div>
-        <?php endif; ?>
-        <form method="post">
-            <?= csrf_field() ?>
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
-        </form>
-        <p class="text-center mt-3 mb-0">No account? <a href="register.php">Register User</a></p>
+    <div class="auth-shell">
+        <div class="auth-illustration">
+            <img src="../assets/images/support-illustration.svg" alt="Support illustration">
+            <h4>We're here to help</h4>
+            <p>Track, assign, and resolve support tickets in one place.</p>
+        </div>
+        <div class="auth-card">
+            <h3 class="mb-4 text-center">Smart Helpdesk</h3>
+            <?php if ($error): ?>
+                <div class="alert alert-danger"><?= e($error) ?></div>
+            <?php endif; ?>
+            <form method="post">
+                <?= csrf_field() ?>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+            <p class="text-center mt-3 mb-0">No account? <a href="register.php">Register User</a></p>
+        </div>
     </div>
 </div>
 </body>

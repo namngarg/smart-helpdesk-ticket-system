@@ -9,4 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
+<body class="app-bg">
+<script>if (localStorage.getItem('sidebarCollapsed') === '1') { document.body.classList.add('sidebar-collapsed'); }</script>
+<div class="app-shell">

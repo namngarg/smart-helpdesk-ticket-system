@@ -15,11 +15,26 @@ $pageTitle = 'My Tickets';
 require __DIR__ . '/../includes/header.php';
 require __DIR__ . '/../includes/navbar.php';
 ?>
-<div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3>My Tickets</h3>
-        <a href="create_ticket.php" class="btn btn-primary">+ New Ticket</a>
+<div class="container-fluid">
+    <div class="page-header d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+            <div class="page-icon"><i class="bi bi-ticket-detailed"></i></div>
+            <div>
+                <h3 class="mb-0">My Tickets</h3>
+                <p class="mb-0">Track all your submitted support requests</p>
+            </div>
+        </div>
+        <a href="create_ticket.php" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>New Ticket</a>
     </div>
+    <?php if ($tickets->num_rows === 0): ?>
+        <div class="card">
+            <div class="empty-state">
+                <i class="bi bi-inbox"></i>
+                You haven't raised any tickets yet.<br>
+                <a href="create_ticket.php" class="btn btn-primary mt-3"><i class="bi bi-plus-lg me-1"></i>Create your first ticket</a>
+            </div>
+        </div>
+    <?php else: ?>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -37,12 +52,13 @@ require __DIR__ . '/../includes/navbar.php';
                 <td><a href="../ticket/view.php?id=<?= (int) $t['id'] ?>"><?= e($t['title']) ?></a></td>
                 <td><?= priority_badge($t['priority']) ?></td>
                 <td><?= status_badge($t['status']) ?></td>
-                <td><?= e($t['assigned_name'] ?? 'Unassigned') ?></td>
+                <td><?= $t['assigned_name'] ? avatar($t['assigned_name']) : '<span class="text-muted">Unassigned</span>' ?></td>
                 <td><?= e($t['deadline'] ?? '-') ?> <?= $overdue ? '<span class="badge bg-danger">Overdue</span>' : '' ?></td>
                 <td><?= e($t['created_at']) ?></td>
             </tr>
         <?php endwhile; ?>
         </tbody>
     </table>
+    <?php endif; ?>
 </div>
 <?php require __DIR__ . '/../includes/footer.php'; ?>

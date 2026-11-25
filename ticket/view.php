@@ -72,7 +72,7 @@ require __DIR__ . '/../includes/header.php';
 require __DIR__ . '/../includes/navbar.php';
 ?>
 <div class="container" style="max-width: 800px;">
-    <a href="<?= e($back_links[$role]) ?>" class="d-inline-block mb-3">&larr; Back</a>
+    <a href="<?= e($back_links[$role]) ?>" class="d-inline-block mb-3"><i class="bi bi-arrow-left me-1"></i>Back</a>
 
     <div class="card mb-4">
         <div class="card-body">
@@ -87,23 +87,23 @@ require __DIR__ . '/../includes/navbar.php';
             <p class="mt-3"><?= nl2br(e($ticket['description'])) ?></p>
             <hr>
             <div class="row small text-muted">
-                <div class="col-md-3">Created by<br><strong class="text-dark"><?= e($ticket['creator_name']) ?></strong></div>
-                <div class="col-md-3">Assigned to<br><strong class="text-dark"><?= e($ticket['assignee_name'] ?? 'Unassigned') ?></strong></div>
+                <div class="col-md-3">Created by<br><?= avatar($ticket['creator_name']) ?></div>
+                <div class="col-md-3">Assigned to<br><?= $ticket['assignee_name'] ? avatar($ticket['assignee_name']) : '<span class="text-muted">Unassigned</span>' ?></div>
                 <div class="col-md-3">Deadline<br><strong class="text-dark"><?= e($ticket['deadline'] ?? '-') ?></strong></div>
                 <div class="col-md-3">Last updated<br><strong class="text-dark"><?= e($ticket['updated_at']) ?></strong></div>
             </div>
         </div>
     </div>
 
-    <h5 class="mb-3">Activity</h5>
+    <h5 class="mb-3"><i class="bi bi-chat-dots me-1"></i>Activity</h5>
     <?php if ($comments->num_rows === 0): ?>
-        <p class="text-muted">No comments yet.</p>
+        <div class="card"><div class="empty-state py-4"><i class="bi bi-chat-square-text"></i>No comments yet.</div></div>
     <?php endif; ?>
     <?php while ($c = $comments->fetch_assoc()): ?>
         <div class="card mb-2">
             <div class="card-body py-2">
                 <div class="d-flex justify-content-between">
-                    <strong><?= e($c['author_name']) ?> <span class="text-muted small">(<?= e($c['author_role']) ?>)</span></strong>
+                    <strong><?= avatar($c['author_name']) ?> <span class="text-muted small">(<?= e($c['author_role']) ?>)</span></strong>
                     <span class="text-muted small"><?= e($c['created_at']) ?></span>
                 </div>
                 <p class="mb-0"><?= nl2br(e($c['comment'])) ?></p>
@@ -119,7 +119,7 @@ require __DIR__ . '/../includes/navbar.php';
         <div class="mb-2">
             <textarea name="comment" class="form-control" rows="3" placeholder="Add a comment..." required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Post Comment</button>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-send me-1"></i>Post Comment</button>
     </form>
 </div>
 <?php require __DIR__ . '/../includes/footer.php'; ?>
