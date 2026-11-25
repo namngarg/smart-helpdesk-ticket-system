@@ -17,29 +17,39 @@ require __DIR__ . '/../includes/navbar.php';
 <div class="container">
     <h3 class="mb-4">Ticket Analytics</h3>
 
-    <div class="row mb-4">
+    <div class="row mb-4 g-3">
         <div class="col-md-3">
-            <div class="card text-center p-3">
-                <h2><?= (int) $total_count ?></h2>
-                <p class="mb-0">Total Tickets</p>
+            <div class="stat-card d-flex align-items-center gap-3">
+                <i class="bi bi-ticket-detailed fs-3 text-primary"></i>
+                <div>
+                    <div class="stat-value"><?= (int) $total_count ?></div>
+                    <div class="stat-label">Total Tickets</div>
+                </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card text-center p-3 border-danger">
-                <h2 class="text-danger"><?= (int) $overdue_count ?></h2>
-                <p class="mb-0">Overdue</p>
+            <div class="stat-card d-flex align-items-center gap-3">
+                <i class="bi bi-exclamation-triangle fs-3 text-danger"></i>
+                <div>
+                    <div class="stat-value text-danger"><?= (int) $overdue_count ?></div>
+                    <div class="stat-label">Overdue</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row g-3">
         <div class="col-md-6">
-            <h5>By Status</h5>
-            <canvas id="statusChart"></canvas>
+            <div class="card p-3">
+                <h5>By Status</h5>
+                <canvas id="statusChart"></canvas>
+            </div>
         </div>
         <div class="col-md-6">
-            <h5>By Priority</h5>
-            <canvas id="priorityChart"></canvas>
+            <div class="card p-3">
+                <h5>By Priority</h5>
+                <canvas id="priorityChart"></canvas>
+            </div>
         </div>
     </div>
 </div>
